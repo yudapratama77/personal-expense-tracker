@@ -28,6 +28,7 @@ fun ExpenseItem(
             .clickable {
                 onClick()
             }
+            .padding(horizontal = 16.dp)
     ) {
         Column(
             modifier = Modifier.padding(16.dp)
