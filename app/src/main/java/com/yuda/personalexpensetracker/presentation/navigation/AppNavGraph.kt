@@ -45,7 +45,11 @@ fun AppNavGraph() {
         }
 
         composable(route = Screen.ExpenseDetail.route) {
-            ExpenseDetailScreen()
+            ExpenseDetailScreen(
+                onBack = {
+                    navController.popBackStack()
+                }
+            )
         }
     }
 }
