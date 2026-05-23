@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.yuda.personalexpensetracker.presentation.addexpense.AddExpenseScreen
+import com.yuda.personalexpensetracker.presentation.expensedetail.ExpenseDetailScreen
 import com.yuda.personalexpensetracker.presentation.expenselist.ExpenseListScreen
 
 @Composable
@@ -19,8 +20,18 @@ fun AppNavGraph() {
 
         composable(Screen.ExpenseList.route) {
             ExpenseListScreen(
+                navController = navController,
+
                 onAddExpenseClick = {
-                    navController.navigate(Screen.AddExpense.route)
+                    navController.navigate(
+                        Screen.AddExpense.route
+                    )
+                },
+
+                onExpenseClick = { expenseId ->
+                    navController.navigate(
+                        Screen.ExpenseDetail.createRoute(expenseId)
+                    )
                 }
             )
         }
@@ -31,6 +42,10 @@ fun AppNavGraph() {
                     navController.popBackStack()
                 }
             )
+        }
+
+        composable(route = Screen.ExpenseDetail.route) {
+            ExpenseDetailScreen()
         }
     }
 }

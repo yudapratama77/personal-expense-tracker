@@ -20,13 +20,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.yuda.personalexpensetracker.util.CurrencyFormatter
 
 @Composable
 fun ExpenseListScreen(
     onAddExpenseClick: () -> Unit,
+    onExpenseClick: (Int) -> Unit,
     viewModel: ExpenseListViewModel = hiltViewModel()
 ) {
-
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(
@@ -62,7 +63,7 @@ fun ExpenseListScreen(
             ) {
 
                 Text(
-                    text = "Total: $${uiState.totalExpense}",
+                    text = "Total: ${CurrencyFormatter.format(uiState.totalExpense)}",
                     modifier = Modifier.padding(16.dp),
                     style = MaterialTheme.typography.titleLarge
                 )
@@ -74,7 +75,11 @@ fun ExpenseListScreen(
                 ) {
 
                     items(uiState.expenses) { expense ->
-                        ExpenseItem(expense = expense)
+                        ExpenseItem(
+                            expense = expense,
+                            onClick = {
+                                onExpenseClick(expense.id)
+                            })
                     }
                 }
             }
